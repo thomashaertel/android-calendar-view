@@ -6,4 +6,5 @@
 <dimen name="cell_heigh">53px</dimen>
 <dimen name="cell_margin_top">92px</dimen>
 <dimen name="cell_margin_left">39px</dimen>
+<dimen name="cell_text_size">26px</dimen>
 </resources>

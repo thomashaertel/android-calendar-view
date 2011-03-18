@@ -22,14 +22,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.MonthDisplayHelper;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -40,6 +36,7 @@ public class CalendarView extends ImageView {
     private static int CELL_HEIGH = 53;
     private static int CELL_MARGIN_TOP = 92;
     private static int CELL_MARGIN_LEFT = 39;
+    private static float CELL_TEXT_SIZE;
     
 	private static final String TAG = "CalendarView"; 
 	private Calendar mRightNow = null;
@@ -79,7 +76,7 @@ public class CalendarView extends ImageView {
 		CELL_HEIGH = (int) res.getDimension(R.dimen.cell_heigh);
 		CELL_MARGIN_TOP = (int) res.getDimension(R.dimen.cell_margin_top);
 		CELL_MARGIN_LEFT = (int) res.getDimension(R.dimen.cell_margin_left);
-		
+		CELL_TEXT_SIZE = res.getDimension(R.dimen.cell_text_size);
 		// set background
 		setImageResource(R.drawable.background);
 		mWeekTitle = res.getDrawable(R.drawable.calendar_week);
@@ -126,11 +123,11 @@ public class CalendarView extends ImageView {
 			for(int day=0; day<mCells[week].length; day++) {
 				if(tmp[week][day].thisMonth) {
 					if(day==0 || day==6 )
-						mCells[week][day] = new RedCell(tmp[week][day].day, new Rect(Bound));
+						mCells[week][day] = new RedCell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
 					else 
-						mCells[week][day] = new Cell(tmp[week][day].day, new Rect(Bound));
+						mCells[week][day] = new Cell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
 				} else
-					mCells[week][day] = new GrayCell(tmp[week][day].day, new Rect(Bound));
+					mCells[week][day] = new GrayCell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
 				
 				Bound.offset(CELL_WIDTH, 0); // move to next column 
 				
@@ -229,15 +226,15 @@ public class CalendarView extends ImageView {
 	}
 	
 	private class GrayCell extends Cell {
-		public GrayCell(int dayOfMon, Rect rect) {
-			super(dayOfMon, rect);
+		public GrayCell(int dayOfMon, Rect rect, float s) {
+			super(dayOfMon, rect, s);
 			mPaint.setColor(Color.LTGRAY);
 		}			
 	}
 	
 	private class RedCell extends Cell {
-		public RedCell(int dayOfMon, Rect rect) {
-			super(dayOfMon, rect);
+		public RedCell(int dayOfMon, Rect rect, float s) {
+			super(dayOfMon, rect, s);
 			mPaint.setColor(0xdddd0000);
 		}			
 		

@@ -31,10 +31,10 @@ public class Cell {
 	protected Paint mPaint = new Paint(Paint.SUBPIXEL_TEXT_FLAG
             |Paint.ANTI_ALIAS_FLAG);
 	int dx, dy;
-	public Cell(int dayOfMon, Rect rect, boolean bold) {
+	public Cell(int dayOfMon, Rect rect, float textSize, boolean bold) {
 		mDayOfMonth = dayOfMon;
 		mBound = rect;
-		mPaint.setTextSize(26f);
+		mPaint.setTextSize(textSize/*26f*/);
 		mPaint.setColor(Color.BLACK);
 		if(bold) mPaint.setFakeBoldText(true);
 		
@@ -42,8 +42,8 @@ public class Cell {
 		dy = (int) (-mPaint.ascent() + mPaint.descent()) / 2;
 	}
 	
-	public Cell(int dayOfMon, Rect rect) {
-		this(dayOfMon, rect, false);
+	public Cell(int dayOfMon, Rect rect, float textSize) {
+		this(dayOfMon, rect, textSize, false);
 	}
 	
 	protected void draw(Canvas canvas) {

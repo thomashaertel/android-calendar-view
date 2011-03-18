@@ -21,11 +21,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateUtils;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CalendarActivity extends Activity  implements CalendarView.OnCellTouchListener{
 	public static final String MIME_TYPE = "vnd.android.cursor.dir/vnd.exina.android.calendar.date";
 	CalendarView mView = null;
+	TextView mHit;
 	Handler mHandler = new Handler();
 	
 	
@@ -36,6 +39,9 @@ public class CalendarActivity extends Activity  implements CalendarView.OnCellTo
         setContentView(R.layout.main);
         mView = (CalendarView)findViewById(R.id.calendar);
         mView.setOnCellTouchListener(this);
+        
+        if(getIntent().getAction().equals(Intent.ACTION_PICK))
+        	findViewById(R.id.hit).setVisibility(View.INVISIBLE);
     }
 
 	public void onTouch(Cell cell) {
