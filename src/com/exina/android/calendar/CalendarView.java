@@ -76,14 +76,14 @@ public class CalendarView extends ImageView {
 		CELL_HEIGH = (int) res.getDimension(R.dimen.cell_heigh);
 		CELL_MARGIN_TOP = (int) res.getDimension(R.dimen.cell_margin_top);
 		CELL_MARGIN_LEFT = (int) res.getDimension(R.dimen.cell_margin_left);
+
 		CELL_TEXT_SIZE = res.getDimension(R.dimen.cell_text_size);
 		// set background
 		setImageResource(R.drawable.background);
 		mWeekTitle = res.getDrawable(R.drawable.calendar_week);
-		mWeekTitle.setBounds(WEEK_LEFT_MARGIN, WEEK_TOP_MARGIN, WEEK_LEFT_MARGIN+mWeekTitle.getMinimumWidth(), WEEK_TOP_MARGIN+mWeekTitle.getMinimumHeight());
 		
 		mHelper = new MonthDisplayHelper(mRightNow.get(Calendar.YEAR), mRightNow.get(Calendar.MONTH));
-		initCells();
+
     }
 	
 	private void initCells() {
@@ -132,7 +132,7 @@ public class CalendarView extends ImageView {
 				Bound.offset(CELL_WIDTH, 0); // move to next column 
 				
 				// get today
-				if(tmp[week][day].day==thisDay) {
+				if(tmp[week][day].day==thisDay && tmp[week][day].thisMonth) {
 					mToday = mCells[week][day];
 					mDecoration.setBounds(mToday.getBound());
 				}
@@ -142,7 +142,16 @@ public class CalendarView extends ImageView {
 			Bound.right = CELL_MARGIN_LEFT+CELL_WIDTH;
 		}		
 	}
-
+	
+	@Override
+	protected boolean setFrame (int l, int t, int r, int b) {
+		Rect re = getDrawable().getBounds();
+		WEEK_LEFT_MARGIN = CELL_MARGIN_LEFT = (r-l - re.width()) / 2;
+		mWeekTitle.setBounds(WEEK_LEFT_MARGIN, WEEK_TOP_MARGIN, WEEK_LEFT_MARGIN+mWeekTitle.getMinimumWidth(), WEEK_TOP_MARGIN+mWeekTitle.getMinimumHeight());
+		initCells();
+		return super.setFrame(l, t, r, b);
+	}
+	
     public void setTimeInMillis(long milliseconds) {
     	mRightNow.setTimeInMillis(milliseconds);
     	initCells();
