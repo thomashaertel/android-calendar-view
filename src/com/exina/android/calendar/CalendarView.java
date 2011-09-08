@@ -144,12 +144,13 @@ public class CalendarView extends ImageView {
 	}
 	
 	@Override
-	protected boolean setFrame (int l, int t, int r, int b) {
+	public void onLayout(boolean changed, int left, int top, int right, int bottom) {
+		android.util.Log.d(TAG, "left="+left);
 		Rect re = getDrawable().getBounds();
-		WEEK_LEFT_MARGIN = CELL_MARGIN_LEFT = (r-l - re.width()) / 2;
+		WEEK_LEFT_MARGIN = CELL_MARGIN_LEFT = (right-left - re.width()) / 2;
 		mWeekTitle.setBounds(WEEK_LEFT_MARGIN, WEEK_TOP_MARGIN, WEEK_LEFT_MARGIN+mWeekTitle.getMinimumWidth(), WEEK_TOP_MARGIN+mWeekTitle.getMinimumHeight());
 		initCells();
-		return super.setFrame(l, t, r, b);
+		super.onLayout(changed, left, top, right, bottom);
 	}
 	
     public void setTimeInMillis(long milliseconds) {

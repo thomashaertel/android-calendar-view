@@ -41,7 +41,7 @@ public class CalendarActivity extends Activity  implements CalendarView.OnCellTo
         mView.setOnCellTouchListener(this);
         
         if(getIntent().getAction().equals(Intent.ACTION_PICK))
-        	findViewById(R.id.hit).setVisibility(View.INVISIBLE);
+        	findViewById(R.id.hint).setVisibility(View.INVISIBLE);
     }
 
 	public void onTouch(Cell cell) {

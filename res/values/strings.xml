@@ -7,5 +7,5 @@
     <string name="show_summary">start with ACTION_VIEW</string>
     <string name="show">Show Calendar</string>
     <string name="app_name">Calendar Demo</string>
-<string name="hit">Hit: touch the first or last day of month to move to previous or next month.</string>
+<string name="hint">Hit: touch the first or last day of month to move to previous or next month.</string>
 </resources>
