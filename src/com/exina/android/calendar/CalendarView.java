@@ -126,8 +126,9 @@ public class CalendarView extends ImageView {
 						mCells[week][day] = new RedCell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
 					else 
 						mCells[week][day] = new Cell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
-				} else
+				} else {
 					mCells[week][day] = new GrayCell(tmp[week][day].day, new Rect(Bound), CELL_TEXT_SIZE);
+				}
 				
 				Bound.offset(CELL_WIDTH, 0); // move to next column 
 				
@@ -145,7 +146,6 @@ public class CalendarView extends ImageView {
 	
 	@Override
 	public void onLayout(boolean changed, int left, int top, int right, int bottom) {
-		android.util.Log.d(TAG, "left="+left);
 		Rect re = getDrawable().getBounds();
 		WEEK_LEFT_MARGIN = CELL_MARGIN_LEFT = (right-left - re.width()) / 2;
 		mWeekTitle.setBounds(WEEK_LEFT_MARGIN, WEEK_TOP_MARGIN, WEEK_LEFT_MARGIN+mWeekTitle.getMinimumWidth(), WEEK_TOP_MARGIN+mWeekTitle.getMinimumHeight());
@@ -235,7 +235,7 @@ public class CalendarView extends ImageView {
 		}
 	}
 	
-	private class GrayCell extends Cell {
+	public class GrayCell extends Cell {
 		public GrayCell(int dayOfMon, Rect rect, float s) {
 			super(dayOfMon, rect, s);
 			mPaint.setColor(Color.LTGRAY);

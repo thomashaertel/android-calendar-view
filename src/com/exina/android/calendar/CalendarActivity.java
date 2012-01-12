@@ -48,10 +48,38 @@ public class CalendarActivity extends Activity  implements CalendarView.OnCellTo
 		Intent intent = getIntent();
 		String action = intent.getAction();
 		if(action.equals(Intent.ACTION_PICK) || action.equals(Intent.ACTION_GET_CONTENT)) {
+			int year  = mView.getYear();
+			int month = mView.getMonth();
+			int day   = cell.getDayOfMonth();
+			
+			// FIX issue 6: make some correction on month and year
+			if(cell instanceof CalendarView.GrayCell) {
+				// oops, not pick current month...				
+				if (day < 15) {
+					// pick one beginning day? then a next month day
+					if(month==11)
+					{
+						month = 0;
+						year++;
+					} else {
+						month++;
+					}
+					
+				} else {
+					// otherwise, previous month
+					if(month==0) {
+						month = 11;
+						year--;
+					} else {
+						month--;
+					}
+				}
+			}
+			
 			Intent ret = new Intent();
-			ret.putExtra("year", mView.getYear());
-			ret.putExtra("month", mView.getMonth());
-			ret.putExtra("day", cell.getDayOfMonth());
+			ret.putExtra("year", year);
+			ret.putExtra("month", month);
+			ret.putExtra("day", day);
 			this.setResult(RESULT_OK, ret);
 			finish();
 			return;
