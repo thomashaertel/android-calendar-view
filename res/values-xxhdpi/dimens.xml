@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="week_top_margin">109px</dimen>
+<dimen name="week_left_margin">40px</dimen>
+<dimen name="cell_width">86px</dimen>
+<dimen name="cell_heigh">79.5px</dimen>
+<dimen name="cell_margin_top">133px</dimen>
+<dimen name="cell_margin_left">73px</dimen>
+<dimen name="cell_text_size">44px</dimen>
+</resources>

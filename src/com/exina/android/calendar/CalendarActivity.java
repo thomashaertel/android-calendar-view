@@ -52,7 +52,7 @@ public class CalendarActivity extends Activity  implements CalendarView.OnCellTo
 			int month = mView.getMonth();
 			int day   = cell.getDayOfMonth();
 			
-			// FIX issue 6: make some correction on month and year
+			// FIX issue 6: make some tweak on month and year
 			if(cell instanceof CalendarView.GrayCell) {
 				// oops, not pick current month...				
 				if (day < 15) {
