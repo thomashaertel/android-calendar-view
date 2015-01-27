@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ 	<!-- Calendar -->
+	<string name="hint">Tip: Tippen Sie den ersten oder letzten Tag des Monats an um zum vorherigen oder nächsten Monat zu wechseln.</string>
+	<string name="date_time_set">Übernehmen</string>
+	<string name="cancel">Abbrechen</string>
+</resources>

@@ -5,7 +5,7 @@
 Android Calender View is fork from [https://code.google.com/p/android-calendar-view/](https://code.google.com/p/android-calendar-view/) to support using it from Android Studio as a library.
 
 ## Overview
-Android does not offer any calendar view in the SDK. This project is an option for that. Developer can import and use CalendarView to display a specified date in a month view, or let user pick up a date from it.  
+Android does not offer any calendar view in the SDK. This project is an option for that. Developer can import and use com.exina.android.calendar.CalendarView.CalendarView to display a specified date in a month view, or let user pick up a date from it.
 
 <img src="http://farm6.static.flickr.com/5053/5415600440_f1c486c2d4.jpg" alt="Spinner with single selection" width="50%" height="50%">
 
@@ -14,7 +14,7 @@ Add the following code to an activity or fragment to use the calendar view:
  ```java
     private OnDateSetListener listener = new OnDateSetListener() {
         @Override
-        public void onDateSet(CalendarView view, int year, int monthOfYear, int dayOfMonth) {
+        public void onDateSet(com.exina.android.calendar.CalendarView.CalendarView view, int year, int monthOfYear, int dayOfMonth) {
             // Place your code here
         }
     };
