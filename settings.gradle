@@ -1,0 +1,5 @@
+include ':android-calendar-view-sample'
+include ':android-calendar-view'
+
+project(':android-calendar-view').projectDir = file('library')
+project(':android-calendar-view-sample').projectDir = file('samples/calendarview')

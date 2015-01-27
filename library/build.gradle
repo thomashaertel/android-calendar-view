@@ -1,0 +1,134 @@
+apply plugin: 'com.android.library'
+apply plugin: 'android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: '../gradle.properties'
+
+def siteUrl = 'https://github.com/thomashaertel/android-calendar-view'      // Homepage URL of the library
+def gitUrl = 'https://github.com/thomashaertel/android-calendar-view.git'   // Git repository URL
+def scmUrl = 'scm:git@github.com:thomashaertel/android-calendar-view.git'   // SCM repository URL
+def issueUrl = 'https://github.com/thomashaertel/android-calendar-view/issues' // Issue Tracker URL
+def libraryVersionCode = 1
+def libraryVersion = '0.5.0'
+
+// set project version and group
+version = libraryVersion
+group = 'com.thomashaertel'
+
+android {
+    compileSdkVersion global_compileSdkVersion
+    buildToolsVersion global_buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion global_minSdkVersion
+        targetSdkVersion global_targetSdkVersion
+        versionCode libraryVersionCode
+        versionName libraryVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+task androidJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+
+dependencies {
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                artifactId 'android-calendar-view'
+                name 'Android-Calendar-View'
+                packaging 'aar'
+                description 'Calendar Picker Dialog'
+                url siteUrl
+
+                scm {
+                    url siteUrl
+                    connection scmUrl
+                    developerConnection scmUrl
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License'
+                        url 'http://opensource.org/licenses/mit-license.php'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'thomashaertel'
+                        name 'Thomas Haertel'
+                        email 'mailhomashaertel.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('bintrayUser')
+    key = project.hasProperty('bintrayApikey') ? project.property('bintrayApikey') : System.getenv('bintrayApikey')
+
+    configurations = ['archives'] //When uploading configuration files
+
+    pkg {
+        repo = 'maven'
+        name = 'Android-Calendar-View'
+        desc = 'Calendar Picker Dialog'
+        websiteUrl = siteUrl
+        issueTrackerUrl = issueUrl
+        vcsUrl = gitUrl
+        licenses = ['Apache']
+        labels = ['dialog', 'widget', 'android', 'calendar', 'datepicker']
+        publicDownloadNumbers = true
+
+        version {
+            name = libraryVersion
+            vcsTag = libraryVersion
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = project.hasProperty('gpgPassphrase') ? project.property('gpgPassphrase') : System.getenv('gpgPassphrase') //Optional. The passphrase for GPG signing'
+            }
+            properties.has
+/*            mavenCentralSync {
+                sync = true
+                //Optional (true by default). Determines whether to sync the version to Maven Central.
+                user = project.hasProperty('sonatypeUser') ? project.property('sonatypeUser') : System.getenv('sonatypeUser') //OSS user token
+                password = project.hasProperty('sonatypeUser') ? project.property('sonatypeUser') : System.getenv('sonatypeUser') //OSS user password
+                close = '1'
+                //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+            }*/
+        }
+    }
+}
